@@ -32,21 +32,22 @@ defaults
 	errorfile 502 /etc/haproxy/errors/502.http
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
-frontend www-http
-    bind *:80
-    mode http
-    default_backend web-backend
-frontend www-https
-    bind *:443 ssl crt /etc/haproxy/desmonddarlington.tech.pem
-    http-request set-header X-Forwarded-Proto https
-    acl letsencrypt-acl path_beg /.well-known/acme-challenge/
-    use_backend letsencrypt-backend if letsencrypt-acl
-    default_backend web-backend
 
-backend web-backend
-    redirect scheme https unless { ssl_fc }
+
+frontend desmond-frontend-http
+        bind *:80
+        mode http
+	http-request set-header X-Forwarded-Proto http
+        default_backend desmond-backend
+
+
+frontend desmond-frontend-https
+	bind *:443 ssl crt /etc/haproxy/certs/www.desmonddarlington.tech.pem
+	http-request set-header X-Forwarded-Proto https
+	default_backend desmond-backend
+
+
+backend desmond-backend
     balance roundrobin
     server 6168-web-01 54.224.21.202:80 check
     server 6168-web-02 100.26.146.29:80 check
-backend letsencrypt-backend
-   server letsencrypt 127.0.0.1:54321
