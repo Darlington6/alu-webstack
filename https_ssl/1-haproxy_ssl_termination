@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Backup the current HAProxy configuration file
-cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+#cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
 
 # Write new HAProxy configuration
-cat <<EOT > /etc/haproxy/haproxy.cfg
+#cat <<EOT > /etc/haproxy/haproxy.cfg
 
 global
         log /dev/log    local0
@@ -58,8 +58,8 @@ backend desmond-backend
     server web-01 54.224.21.202:80 check
     server web-02 100.26.146.29:80 check
 
-EOT
+#EOT
 
 # Restart HAProxy to apply the new configuration
-systemctl restart haproxy
+#systemctl restart haproxy
 
