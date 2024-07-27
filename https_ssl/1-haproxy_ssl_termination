@@ -10,7 +10,7 @@ defaults
 
 frontend clickviral-tech-frontend
     bind *:80
-    bind *:443 ssl crt /etc/letsencrypt/live/www.desmonddarlington.tech/fullchain.pem key /etc/letsencrypt/live/www.desmonddarlington.tech/privkey.pem
+    bind *:443 ssl crt /etc/letsencrypt/live/www.desmonddarlington.tech/fullchain3.pem key /etc/letsencrypt/live/www.desmonddarlington.tech/privkey3.pem
     redirect scheme https code 301 if !{ ssl_fc }
     default_backend clickviral-tech-backend
 
