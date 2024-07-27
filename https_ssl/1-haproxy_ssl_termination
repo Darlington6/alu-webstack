@@ -49,7 +49,7 @@ frontend desmond-frontend-http
 
 
 frontend desmond-frontend-https
-    bind *:443 ssl crt /etc/letsencrypt/live/www.desmonddarlington.tech/fullchain.pem
+    bind *:443 ssl crt /etc/letsencrypt/live/www.desmonddarlington.tech.pem
     redirect scheme https if !{ ssl_fc }
     default_backend desmond-backend
 
@@ -61,5 +61,5 @@ backend desmond-backend
 #EOT
 
 # Restart HAProxy to apply the new configuration
-#systemctl restart haproxy
+systemctl restart haproxy
 
