@@ -1,3 +1,11 @@
+#!/bin/bash
+
+# Backup the current HAProxy configuration file
+cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+
+# Write new HAProxy configuration
+cat <<EOT > /etc/haproxy/haproxy.cfg
+
 global
         log /dev/log    local0
         log /dev/log    local1 notice
@@ -43,4 +51,9 @@ backend desmond-backend
     balance roundrobin
     server web-01 54.224.21.202:80 check
     server web-02 100.26.146.29:80 check
+
+EOT
+
+# Restart HAProxy to apply the new configuration
+systemctl restart haproxy
 
