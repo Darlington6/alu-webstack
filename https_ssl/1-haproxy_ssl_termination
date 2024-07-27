@@ -36,7 +36,7 @@ defaults
 frontend desmond-frontend.tech
         mode http
         bind *:80
-        bind *:443 ssl crt /etc/letsencrypt/archive/www.desmonddarlington.tech.pem
+        bind *:443 ssl crt /etc/letsencrypt/live/www.desmonddarlington.tech.pem
         http-request redirect scheme https code 301 unless { ssl_fc }
         default_backend desmond-backend
 
