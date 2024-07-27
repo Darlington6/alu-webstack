@@ -33,15 +33,19 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend desmond-frontend.tech
-        mode http
+frontend desmond-frontend
         bind *:80
-        bind *:443 ssl crt /etc/letsencrypt/live/www.desmonddarlington.tech/cert2.pem
+        mode http
         http-request redirect scheme https code 301 unless { ssl_fc }
+        http-request set-header X_Forwarded-Proto http
+        default_backend desmond-backend
+
+frontend desmond-frontend-https
+        bind *:443 ssl crt /etc/haproxy/certs/desmonddarlington.tech.pem
+        http-request set-header X-Forwarded-Proto https
         default_backend desmond-backend
 
 backend desmond-backend
-        mode http
         balance roundrobin
         server 6168-web-01 54.224.21.202:80 check
         server 6168-web-02 100.26.146.29:80 check
